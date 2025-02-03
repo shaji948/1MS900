@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1MS900 - Untitled</title>
+<title>1MS900 - Bayesian Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -145,8 +145,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link active" href="./Bayes.html" aria-current="page">
  <span class="menu-text">Home</span></a>
   </li>  
-  <li class="dropdown-header">
- <span class="menu-text">about.qmd</span></li>
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -162,9 +160,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#independent-monte-carlo" id="toc-independent-monte-carlo" class="nav-link active" data-scroll-target="#independent-monte-carlo"><span class="toc-section-number">1</span>  Independent Monte Carlo</a></li>
-  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><span class="toc-section-number">2</span>  Quarto</a></li>
-  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code"><span class="toc-section-number">3</span>  Running Code</a></li>
+  <li><a href="#computational-techniques" id="toc-computational-techniques" class="nav-link active" data-scroll-target="#computational-techniques"><span class="toc-section-number">1</span>  Computational Techniques</a>
+  <ul class="collapse">
+  <li><a href="#approximating-posterior-moments" id="toc-approximating-posterior-moments" class="nav-link" data-scroll-target="#approximating-posterior-moments"><span class="toc-section-number">1.1</span>  Approximating Posterior Moments</a>
+  <ul class="collapse">
+  <li><a href="#independent-monte-carlo" id="toc-independent-monte-carlo" class="nav-link" data-scroll-target="#independent-monte-carlo"><span class="toc-section-number">1.1.1</span>  Independent Monte Carlo</a></li>
+  <li><a href="#importance-sampling" id="toc-importance-sampling" class="nav-link" data-scroll-target="#importance-sampling"><span class="toc-section-number">1.1.2</span>  Importance Sampling</a></li>
+  <li><a href="#normalized-importance-sampling" id="toc-normalized-importance-sampling" class="nav-link" data-scroll-target="#normalized-importance-sampling"><span class="toc-section-number">1.1.3</span>  Normalized Importance Sampling</a></li>
+  </ul></li>
+  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code"><span class="toc-section-number">1.2</span>  Running Code</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -173,7 +178,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Untitled</h1>
+<h1 class="title">Bayesian Statistics</h1>
 </div>
 
 
@@ -188,8 +193,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="independent-monte-carlo" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="independent-monte-carlo"><span class="header-section-number">1</span> Independent Monte Carlo</h2>
+<section id="computational-techniques" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Computational Techniques</h1>
+<section id="approximating-posterior-moments" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="approximating-posterior-moments"><span class="header-section-number">1.1</span> Approximating Posterior Moments</h2>
+<section id="independent-monte-carlo" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="independent-monte-carlo"><span class="header-section-number">1.1.1</span> Independent Monte Carlo</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Independent Monte Carlo ####</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Data</span></span>
@@ -218,15 +227,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="quarto" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="quarto"><span class="header-section-number">2</span> Quarto</h2>
-<p>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
+<section id="importance-sampling" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="importance-sampling"><span class="header-section-number">1.1.2</span> Importance Sampling</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Importance Sampling ####</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Data</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sumy <span class="ot">&lt;-</span> <span class="fl">40.4</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ybar <span class="ot">&lt;-</span> sumy <span class="sc">/</span> <span class="dv">20</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>sumysq <span class="ot">&lt;-</span> <span class="fl">93.2</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ysd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((sumysq <span class="sc">-</span> n <span class="sc">*</span> ybar <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Posterior </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>betan <span class="ot">&lt;-</span> sumy <span class="sc">/</span> (n <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>an <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> n <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>bn <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> (sumysq <span class="sc">-</span> ((sumy <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">/</span> (n <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Density of inverse-Gamma distribution</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>IvGamma <span class="ot">&lt;-</span> <span class="cf">function</span>(x, a, b){</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">exp</span>(a <span class="sc">*</span> <span class="fu">log</span>(b) <span class="sc">-</span> <span class="fu">lgamma</span>(a) <span class="sc">-</span> (a <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">log</span>(x) <span class="sc">-</span> b <span class="sc">/</span> x)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Monte Carlo</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fl">5e03</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>h.pi.g <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, R)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> R){</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="do">## We use Exp(1 / ybar) as the importance distribution</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    proposal <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">rate =</span> <span class="dv">1</span> <span class="sc">/</span> ybar)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Compute the value of h(theta) * pi(theta | data) / g(theta)</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    h.pi.g[r] <span class="ot">&lt;-</span> proposal <span class="sc">*</span> <span class="fu">IvGamma</span>(proposal, an, bn) <span class="sc">/</span> <span class="fu">dexp</span>(proposal, <span class="at">rate =</span> <span class="dv">1</span> <span class="sc">/</span> ybar)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot the results</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">1.5</span>, <span class="dv">1</span>))</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(h.pi.g) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">:</span> R), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">xlab =</span> <span class="st">"n"</span>, <span class="at">ylab =</span> <span class="st">"Importance Sampling"</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> bn <span class="sc">/</span> (an <span class="sc">-</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Bayes_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="running-code" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="running-code"><span class="header-section-number">3</span> Running Code</h2>
+<section id="normalized-importance-sampling" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="normalized-importance-sampling"><span class="header-section-number">1.1.3</span> Normalized Importance Sampling</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Normalized Importance Sampling ####</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, R)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>NIS <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, R)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> R){</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Simulate sigma and beta</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    sigma.sq <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">rate =</span> <span class="dv">1</span> <span class="sc">/</span> ybar)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    beta <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">mean =</span> ybar, <span class="at">sd =</span> ysd)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Compute the densities</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    posterior <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span> <span class="sc">*</span> ((n <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">*</span> beta <span class="sc">^</span> <span class="dv">2</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> beta <span class="sc">*</span> sumy <span class="sc">+</span> <span class="dv">4</span> <span class="sc">+</span> sumysq) <span class="sc">/</span> sigma.sq) <span class="sc">/</span> (sigma.sq <span class="sc">^</span> (<span class="fl">0.5</span> <span class="sc">*</span> (n <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">3</span>))</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    g.density <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(<span class="at">x =</span> beta, <span class="at">mean =</span> ybar, <span class="at">sd =</span> ysd) <span class="sc">*</span> <span class="fu">dexp</span>(<span class="at">x =</span> sigma.sq, <span class="at">rate =</span> <span class="dv">1</span> <span class="sc">/</span> ybar)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="do">## normalized IS estimator</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    w[r] <span class="ot">&lt;-</span> posterior <span class="sc">/</span> g.density</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    NIS[r] <span class="ot">&lt;-</span> w[r] <span class="sc">*</span> sigma.sq</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot the results</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">1.5</span>, <span class="dv">1</span>))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(NIS) <span class="sc">/</span> <span class="fu">cumsum</span>(w), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">xlab =</span> <span class="st">"n"</span>, <span class="at">ylab =</span> <span class="st">"Normalized Importance Sampling"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> bn <span class="sc">/</span> (an <span class="sc">-</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Bayes_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="running-code" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="running-code"><span class="header-section-number">1.2</span> Running Code</h2>
 <p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
@@ -240,6 +310,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
