@@ -88,23 +88,58 @@ for(r in 1 : R){
 par(mar = c(4.1, 4.1, 1.5, 1))
 plot(cumsum(NIS) / cumsum(w), type = "l", xlab = "n", ylab = "Normalized Importance Sampling")
 abline(h = bn / (an - 1), col = 2, lty = 2, lwd = 2)
-
 ```
 
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
+## Sampling from Posterior Distribution
+### Metropolis-Hastings Algorithm
 ```{r}
-1 + 1
+#### Metropolis-Hastings Algorithm ####
+## Data
+n <- 20
+sumy <- 40.4
+sumysq <- 93.2
+ybar <- sumy / n
+ysd <- sqrt((sumysq - n * ybar ^ 2) / (n - 1))
+## Define function for posterior density
+posterior <- function(beta, sigma.sq) {
+    exp(-0.5 * ((n + 1) * beta ^ 2 - 2 * beta * sumy + 4 + sumysq) / sigma.sq) / 
+        (sigma.sq ^ (0.5 * (n + 1) + 3))
+}
+## Define function for Metropolis-Hastings algorithm
+MHalgorithm <- function(L, initial, sd) {   
+    # L is the length of the Markov chain, including the burn-in period
+    # initial is the initial state
+    # sd is the standard deviation of the proposal distribution for beta
+    chain <- rbind(c(initial), matrix(NA, L, length(initial)))
+    for(t in 1 : L){
+        # Propose a candidate
+        beta.prop <- rnorm(n = 1, mean = chain[t, 1], sd = sd)
+        sigmasq.prop <- rexp(n = 1, rate = 1 / chain[t, 2])
+        # Calculate the ratio
+        numerator <- posterior(beta = beta.prop, sigma.sq = sigmasq.prop) * 
+            dnorm(x = chain[t, 1], mean = beta.prop, sd = sd) * 
+            dexp(x = chain[t, 2], rate = 1 / sigmasq.prop)
+        denominator <- posterior(beta = chain[t, 1], sigma.sq = chain[t, 2]) * 
+            dnorm(x = beta.prop, mean = chain[t, 1], sd = sd) * 
+            dexp(x = sigmasq.prop, rate = 1 / chain[t, 2])
+        r <- numerator / denominator
+        # Generate U(0, 1)
+        u <- runif(1, 0, 1)
+        # Update
+        if(u <= r) {     
+            chain[t + 1, ] <- c(beta.prop, sigmasq.prop)
+        } else {     
+            chain[t + 1, ] <- chain[t, ]       
+        }
+    }
+    chain
+}
+## Perform MCMC sampling
+set.seed(12345)
+MH <- MHalgorithm(L = 20000, initial = c(0, 1), sd = 0.2) # sd is a tuning parameter
+par(mfrow = c(2, 1), mar = c(4.1, 4.1, 1.5, 1)) 
+plot(MH[, 1], type = "l", ylab = expression(beta))  
+plot(MH[, 2], type = "l", ylab = expression(sigma^2))
 ```
 
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).

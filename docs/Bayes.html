@@ -145,10 +145,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link active" href="./Bayes.html" aria-current="page">
  <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Bayes.html">
- <span class="menu-text">Bayesian Statistics</span></a>
-  </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -172,7 +168,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#importance-sampling" id="toc-importance-sampling" class="nav-link" data-scroll-target="#importance-sampling"><span class="toc-section-number">1.1.2</span>  Importance Sampling</a></li>
   <li><a href="#normalized-importance-sampling" id="toc-normalized-importance-sampling" class="nav-link" data-scroll-target="#normalized-importance-sampling"><span class="toc-section-number">1.1.3</span>  Normalized Importance Sampling</a></li>
   </ul></li>
-  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code"><span class="toc-section-number">1.2</span>  Running Code</a></li>
+  <li><a href="#sampling-from-posterior-distribution" id="toc-sampling-from-posterior-distribution" class="nav-link" data-scroll-target="#sampling-from-posterior-distribution"><span class="toc-section-number">1.2</span>  Sampling from Posterior Distribution</a>
+  <ul class="collapse">
+  <li><a href="#metropolis-hastings-algorithm" id="toc-metropolis-hastings-algorithm" class="nav-link" data-scroll-target="#metropolis-hastings-algorithm"><span class="toc-section-number">1.2.1</span>  Metropolis-Hastings Algorithm</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -296,24 +295,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </section>
-<section id="running-code" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="running-code"><span class="header-section-number">1.2</span> Running Code</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
+<section id="sampling-from-posterior-distribution" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sampling-from-posterior-distribution"><span class="header-section-number">1.2</span> Sampling from Posterior Distribution</h2>
+<section id="metropolis-hastings-algorithm" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="metropolis-hastings-algorithm"><span class="header-section-number">1.2.1</span> Metropolis-Hastings Algorithm</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Metropolis-Hastings Algorithm ####</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Data</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sumy <span class="ot">&lt;-</span> <span class="fl">40.4</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>sumysq <span class="ot">&lt;-</span> <span class="fl">93.2</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>ybar <span class="ot">&lt;-</span> sumy <span class="sc">/</span> n</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>ysd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((sumysq <span class="sc">-</span> n <span class="sc">*</span> ybar <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Define function for posterior density</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> <span class="cf">function</span>(beta, sigma.sq) {</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span> <span class="sc">*</span> ((n <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">*</span> beta <span class="sc">^</span> <span class="dv">2</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> beta <span class="sc">*</span> sumy <span class="sc">+</span> <span class="dv">4</span> <span class="sc">+</span> sumysq) <span class="sc">/</span> sigma.sq) <span class="sc">/</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        (sigma.sq <span class="sc">^</span> (<span class="fl">0.5</span> <span class="sc">*</span> (n <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">3</span>))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Define function for Metropolis-Hastings algorithm</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>MHalgorithm <span class="ot">&lt;-</span> <span class="cf">function</span>(L, initial, sd) {   </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># L is the length of the Markov chain, including the burn-in period</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># initial is the initial state</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sd is the standard deviation of the proposal distribution for beta</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    chain <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(initial), <span class="fu">matrix</span>(<span class="cn">NA</span>, L, <span class="fu">length</span>(initial)))</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> L){</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Propose a candidate</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        beta.prop <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">mean =</span> chain[t, <span class="dv">1</span>], <span class="at">sd =</span> sd)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        sigmasq.prop <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">rate =</span> <span class="dv">1</span> <span class="sc">/</span> chain[t, <span class="dv">2</span>])</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate the ratio</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        numerator <span class="ot">&lt;-</span> <span class="fu">posterior</span>(<span class="at">beta =</span> beta.prop, <span class="at">sigma.sq =</span> sigmasq.prop) <span class="sc">*</span> </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>            <span class="fu">dnorm</span>(<span class="at">x =</span> chain[t, <span class="dv">1</span>], <span class="at">mean =</span> beta.prop, <span class="at">sd =</span> sd) <span class="sc">*</span> </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">dexp</span>(<span class="at">x =</span> chain[t, <span class="dv">2</span>], <span class="at">rate =</span> <span class="dv">1</span> <span class="sc">/</span> sigmasq.prop)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        denominator <span class="ot">&lt;-</span> <span class="fu">posterior</span>(<span class="at">beta =</span> chain[t, <span class="dv">1</span>], <span class="at">sigma.sq =</span> chain[t, <span class="dv">2</span>]) <span class="sc">*</span> </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            <span class="fu">dnorm</span>(<span class="at">x =</span> beta.prop, <span class="at">mean =</span> chain[t, <span class="dv">1</span>], <span class="at">sd =</span> sd) <span class="sc">*</span> </span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            <span class="fu">dexp</span>(<span class="at">x =</span> sigmasq.prop, <span class="at">rate =</span> <span class="dv">1</span> <span class="sc">/</span> chain[t, <span class="dv">2</span>])</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        r <span class="ot">&lt;-</span> numerator <span class="sc">/</span> denominator</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Generate U(0, 1)</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(u <span class="sc">&lt;=</span> r) {     </span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            chain[t <span class="sc">+</span> <span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(beta.prop, sigmasq.prop)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {     </span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            chain[t <span class="sc">+</span> <span class="dv">1</span>, ] <span class="ot">&lt;-</span> chain[t, ]       </span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    chain</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="do">## Perform MCMC sampling</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>MH <span class="ot">&lt;-</span> <span class="fu">MHalgorithm</span>(<span class="at">L =</span> <span class="dv">20000</span>, <span class="at">initial =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">sd =</span> <span class="fl">0.2</span>) <span class="co"># sd is a tuning parameter</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">1.5</span>, <span class="dv">1</span>)) </span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(MH[, <span class="dv">1</span>], <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(beta))  </span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(MH[, <span class="dv">2</span>], <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(sigma<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Bayes_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>You can add options to executable code like this</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
-</div>
-</div>
-<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
 
 
+</section>
 </section>
 </section>
 
