@@ -5,6 +5,7 @@ editor: visual
 ---
 
 ## Independent Monte Carlo
+
 ```{r}
 #### Independent Monte Carlo ####
 ## Data
@@ -29,7 +30,6 @@ par(mar = c(4.1, 4.1, 1.5, 1))
 plot(cumsum(beta) / (1 : R), type = "l", xlab = "n", ylab = "Independent Monte Carlo approximation")
 abline(h = sumy / (n + 1), col = 2, lty = 2, lwd = 2)
 ```
-
 
 ## Quarto
 

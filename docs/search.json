@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "Bayes.html",
+    "href": "Bayes.html",
+    "title": "Untitled",
+    "section": "",
+    "text": "#### Independent Monte Carlo ####\n## Data\nn <- 20\nsumy <- 40.4\nsumysq <- 93.2\nR <- 5e03\n## Posterior \nbetan <- sumy / (n + 1)\nan <- 2 + n / 2\nbn <- 2 + 0.5 * (sumysq - ((sumy ^ 2)) / (n + 1))\n## Independent Monte Carlo\nset.seed(12345)\nsigma.sq <- rep(NA, R)\nbeta <- rep(NA, R)\nfor(r in 1 : R){\n    sigma.sq[r] <- 1 / rgamma(n = 1, shape = an, rate = bn)\n    beta[r] <- rnorm(n = 1, mean = betan, sd = sqrt(sigma.sq[r] / (n + 1)))\n}\n## Plot the results\npar(mar = c(4.1, 4.1, 1.5, 1))\nplot(cumsum(beta) / (1 : R), type = \"l\", xlab = \"n\", ylab = \"Independent Monte Carlo approximation\")\nabline(h = sumy / (n + 1), col = 2, lty = 2, lwd = 2)"
+  },
+  {
+    "objectID": "Bayes.html#quarto",
+    "href": "Bayes.html#quarto",
+    "title": "Untitled",
+    "section": "2 Quarto",
+    "text": "2 Quarto\nQuarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "Bayes.html#running-code",
+    "href": "Bayes.html#running-code",
+    "title": "Untitled",
+    "section": "3 Running Code",
+    "text": "3 Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+  }
+]
