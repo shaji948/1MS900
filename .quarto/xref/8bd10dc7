@@ -1,1 +1,1 @@
-{"headings":["computational-techniques","approximating-posterior-moments","independent-monte-carlo","importance-sampling","normalized-importance-sampling","sampling-from-posterior-distribution","metropolis-hastings-algorithm"],"entries":[]}
+{"headings":["computational-techniques","approximating-posterior-moments","independent-monte-carlo","importance-sampling","normalized-importance-sampling","sampling-from-posterior-distribution","metropolis-hastings-algorithm","gibbs-sampler","hamitonian-mc","rao-blackwellization","stan","regression-using-stan-in-r"],"entries":[]}
